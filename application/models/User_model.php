@@ -22,8 +22,12 @@
 
 			$result = $this->db->get('users');
 
-			if($result->num_rows() == 1){
-				return $result->row(0)->id;
+
+			$result = $this->db->query("SELECT email, isadmin FROM users WHERE username = ? AND password = ?", $insert_values)->row_array();
+
+			if($result){
+				return $result;
+
 			} else {
 				return false;
 			}
@@ -48,4 +52,8 @@
 				return false;
 			}
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 	}
