@@ -19,10 +19,10 @@
 
 			$insert_values = array($username, $password);
 
-			$result = $this->db->query("SELECT email FROM users WHERE username = ? AND password = ?", $insert_values)->row_array();
+			$result = $this->db->query("SELECT email, isadmin FROM users WHERE username = ? AND password = ?", $insert_values)->row_array();
 
-			if($result['email']){
-				return $result['email'];
+			if($result){
+				return $result;
 			} else {
 				return false;
 			}
@@ -51,7 +51,4 @@
 			}
 		}
 
-		public function is_admin($email) {
-			$query = $this->db->query("SELECT isadmin FROM users WHERE email = ?", array($email))->row_array();
-		}
 	}
