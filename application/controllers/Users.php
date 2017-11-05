@@ -60,7 +60,8 @@
 					// Set message
 					$this->session->set_flashdata('user_loggedin', 'You are now logged in');
 
-					redirect('posts');
+					redirect('projects');
+
 				} else {
 					// Set message
 					$this->session->set_flashdata('login_failed', 'Login is invalid');
@@ -81,7 +82,7 @@
 			// Set message
 			$this->session->set_flashdata('user_loggedout', 'You are now logged out');
 
-			redirect('users/login');
+			redirect('projects');
 		}
 
 		// Check if username exists
@@ -114,16 +115,17 @@
 
 			// // Init Pagination
 			// $this->pagination->initialize($config);
-			show_error(var_dump(is_admin()));
-			
+			if(is_admin()) {
+				$data['title'] = 'Latest Posts';
 
-			$data['title'] = 'Latest Posts';
+				$data['posts'] = $this->post_model->get_posts(FALSE, $config['per_page'], $offset);
 
-			$data['posts'] = $this->post_model->get_posts(FALSE, $config['per_page'], $offset);
-
-			$this->load->view('templates/header');
-			$this->load->view('posts/index', $data);
-			$this->load->view('templates/footer');
+				$this->load->view('templates/header');
+				$this->load->view('users/index', $data);
+				$this->load->view('templates/footer');
+			} else {
+				redirect('projects/index');
+			}
 		}
 
 		public function edit($slug){
