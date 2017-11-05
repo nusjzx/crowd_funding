@@ -10,4 +10,8 @@ echo '<h5>Contact the initiator: '.$item_details['creator_email'].'</h5>';
 
 $path = base_url();
 echo anchor($path, 'Back');
+
+if(current_user_email() == $item_details['creator_email']) {
+	echo anchor('projects/edit/'.$item_details['id'], 'Edit Project');
+}
 ?>

@@ -25,7 +25,6 @@ class Projects extends CI_Controller {
 		{
 			show_404();
 		}
-
 		$this->load->view('templates/header', $data);
 		$this->load->view('projects/view', $data);
 		$this->load->view('templates/footer', $data);
@@ -37,9 +36,35 @@ class Projects extends CI_Controller {
 			redirect('users/login');
 		}
 
-		$data['title'] = 'Start A Campaign';
-		$data['start_date'] = date('Y/m/d h:i:s', time());
-		$this->load->view('new', $data);
+		$this->form_validation->set_rules('title', 'Title', 'required');
+		$this->form_validation->set_rules('description', 'Description', 'required');
+		$this->form_validation->set_rules('duration', 'Duration', 'required');
+		$this->form_validation->set_rules('duration', 'Duration', 'callback_positive_check');
+		$this->form_validation->set_rules('aim_amount', 'Aim Amount', 'required');
+		$this->form_validation->set_rules('aim_amount', 'Aim Amount', 'callback_positive_check');
+
+		if($this->form_validation->run() === FALSE){
+			$data['title'] = 'Start A Project';
+			$data['start_date'] = date('Y/m/d h:i:s', time());
+			$data['creator_email'] = current_user_email();
+
+			$this->load->view('templates/header', $data);
+			$this->load->view('projects/new', $data);
+			$this->load->view('templates/footer', $data);
+		} else {
+			$insert_data = $this->input->post();
+			//show_error($insert_data);
+			$this->projects_model->insert_entry($insert_data);
+			$this->load->view('templates/header');
+			$this->load->view('projects/formsuccess');
+			$this->load->view('templates/footer');
+		}
+	}
+
+	public function edit($id) {
+		if(!$this->session->userdata('logged_in')){
+			redirect('users/login');
+		}
 
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
@@ -49,11 +74,18 @@ class Projects extends CI_Controller {
 		$this->form_validation->set_rules('aim_amount', 'Aim Amount', 'callback_positive_check');
 
 		if($this->form_validation->run() === FALSE){
-			$this->load->view('new');
+			$data['old'] = $this->projects_model->get_one_entry($id);
+
+			$this->load->view('templates/header');
+			$this->load->view('projects/update', $data);
+			$this->load->view('templates/footer');
 		} else {
-			// Set message
-			$this->load->view('formsuccess');
-			redirect('posts');
+			$update_data = $this->input->post();
+			show_error($update_data);
+			$this->projects_model->update_entry($update_data);
+			$this->load->view('templates/header');
+			$this->load->view('projects/formsuccess');
+			$this->load->view('templates/footer');
 		}
 	}
 
@@ -64,10 +96,6 @@ class Projects extends CI_Controller {
 		} else {
 			return TRUE;
 		}
-	}
-
-	public function new() {
-		$this->load->view('projects/new');
 	}
 }
 
