@@ -77,7 +77,7 @@ $db['default'] = array(
 	'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=crowdfunding;user=postgres;password=123',
 	'hostname' => 'pgsql:host=localhost',
 	'username' => 'postgres',
-	'password' => '0doudou!',
+	'password' => '123',
 	'database' => 'crowdfunding',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',

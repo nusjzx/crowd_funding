@@ -14,19 +14,16 @@
 	<h5>Description</h5>
 	<input type="text" name="description" value="" size="50" />
 
-	<input type="hidden" name="start_date" value="" size="50"/>
+	<input type="hidden" name="start_date" value="">
 
-	<h5>Duration (Days)</h5>
-	<input type="number" name="duration" value="" size="50" />
+	<h5>Duartion (Days)</h5>
+	<input type="text" name="duartion" value="" size="50" />
 
 	<h5>Category</h5>
 	<input type="text" name="category" value="" size="50" />
 
-	<h5>Aim Amount (in Singapore Dollars)</h5>
-	<input type="number" name="aim_amount" value="" size="50" />
-
-	<h5>Your contact email:</h5>
-	<input type="text" name="category" value="" size="50" />
+	<h5>Aim Amount</h5>
+	<input type="text" name="aim_amount" value="" size="50" />
 
 	<div><input type="submit" value="Submit" /></div>
 

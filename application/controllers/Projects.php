@@ -5,6 +5,7 @@ class Projects extends CI_Controller {
 		parent::__construct();
 		$this->load->model('projects_model');
 		$this->load->helper('url_helper');
+		$this->load->library('form_validation');
 	}
 
 	public function index() {
@@ -25,7 +26,7 @@ class Projects extends CI_Controller {
 			show_404();
 		}
 
-		$this->load->view('templates/subheader', $data);
+		$this->load->view('templates/header', $data);
 		$this->load->view('projects/view', $data);
 		$this->load->view('templates/footer', $data);
 	}
@@ -37,8 +38,8 @@ class Projects extends CI_Controller {
 		}
 
 		$data['title'] = 'Start A Campaign';
-
-		$data['categories'] = $this->post_model->get_categories();
+		$data['start_date'] = date('Y/m/d h:i:s', time());
+		$this->load->view('new', $data);
 
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
@@ -48,7 +49,7 @@ class Projects extends CI_Controller {
 		$this->form_validation->set_rules('aim_amount', 'Aim Amount', 'callback_positive_check');
 
 		if($this->form_validation->run() === FALSE){
-			$this->load->view('myform');
+			$this->load->view('new');
 		} else {
 			// Set message
 			$this->load->view('formsuccess');

@@ -8,6 +8,6 @@ echo '<h3>Aim: $'.$item_details['aim_amount'].'</h3>';
 echo '<h3>Currently raised: $'.$item_details['current_amount'].'</h3>';
 echo '<h5>Contact the initiator: '.$item_details['creator_email'].'</h5>';
 
-$path = base_url('index.php');
+$path = base_url();
 echo anchor($path, 'Back');
 ?>

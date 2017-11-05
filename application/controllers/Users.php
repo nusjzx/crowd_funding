@@ -44,16 +44,6 @@
 				// Get and encrypt the password
 				$password = md5($this->input->post('password'));
 
-				// Login user
-<<<<<<< HEAD
-				$user_id = $this->user_model->login($username, $password);
-
-				if($user_id){
-					// Create session
-					$user_data = array(
-						'user_id' => $user_id,
-						'username' => $username,
-=======
 				$result = $this->user_model->login($username, $password);
 
 				if($result){
@@ -62,7 +52,6 @@
 						'email' => $email,
 						'username' => $result['email'],
 						'isadmin' => $result['isadmin'],
->>>>>>> origin/master
 						'logged_in' => true
 					);
 
@@ -76,10 +65,7 @@
 					// Set message
 					$this->session->set_flashdata('login_failed', 'Login is invalid');
 
-<<<<<<< HEAD
 					redirect('users/login');
-=======
->>>>>>> origin/master
 				}		
 			}
 		}

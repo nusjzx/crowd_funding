@@ -52,8 +52,4 @@
 				return false;
 			}
 		}
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 	}
