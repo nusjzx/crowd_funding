@@ -74,12 +74,12 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '123456',
-	'database' => 'ciblog',
-	'dbdriver' => 'mysqli',
+	'dsn'	=> 'pgsql:host=localhost;port=5432;dbname=crowdfunding;user=postgres;password=123',
+	'hostname' => 'pgsql:host=localhost',
+	'username' => 'postgres',
+	'password' => '123',
+	'database' => 'crowdfunding',
+	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
