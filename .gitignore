@@ -1,7 +1,8 @@
 .DS_Store
 
 conf/
-htdoc/
+htdocs/
+application/config/database.php
 
 application/cache/*
 !application/cache/index.html
