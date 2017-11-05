@@ -41,8 +41,8 @@
 				if($result){
 					// Create session
 					$user_data = array(
-						'email' => $email,
-						'username' => $result['email'],
+						'email' => $result['email'],
+						'username' => $result['username'],
 						'isadmin' => $result['isadmin'],
 						'logged_in' => true
 					);
@@ -93,7 +93,7 @@
 			if(is_admin()) {
 				$data['title'] = 'Users';
 
-				$data['users'] = $this->user_model->get();
+				$data['users'] = $this->user_model->get_all_entries();
 
 				$this->load->view('templates/header');
 				$this->load->view('users/index', $data);
@@ -103,45 +103,25 @@
 			}
 		}
 
-		public function edit($slug){
-			// Check login
-			if(!$this->session->userdata('logged_in')){
-				redirect('users/login');
-			}
+		public function edit($email){
 
-			$data['post'] = $this->post_model->get_posts($slug);
+			$data['user'] = $this->user_model->get_one_entry($email);
 
-			// Check user
-			if($this->session->userdata('user_id') != $this->post_model->get_posts($slug)['user_id']){
-				redirect('posts');
-
-			}
-
-			$data['categories'] = $this->post_model->get_categories();
-
-			if(empty($data['post'])){
-				show_404();
-			}
-
-			$data['title'] = 'Edit Post';
+			$data['title'] = 'Edit Profile';
 
 			$this->load->view('templates/header');
-			$this->load->view('posts/edit', $data);
+			$this->load->view('users/edit', $data);
 			$this->load->view('templates/footer');
 		}
 
 		public function update(){
-			// Check login
-			if(!$this->session->userdata('logged_in')){
-				redirect('users/login');
-			}
 
-			$this->post_model->update_post();
+			$this->user_model->update();
 
 			// Set message
 			$this->session->set_flashdata('post_updated', 'Your post has been updated');
 
-			redirect('posts');
+			redirect(base_url());
 		}
 
 		public function delete($id){

@@ -48,22 +48,14 @@
 			$query = $this->db->query("SELECT isadmin FROM users WHERE email = ?", array($email))->row_array();
 		}
 
-		public function get(){
+		public function get_all_entries() {
 			$query = $this->db->query("SELECT * FROM users");
 			return $query->result_array();
 		}
 
-		public function create($post_image){
-			$slug = url_title($this->input->post('title'));
-			$data = array(
-				'title' => $this->input->post('title'),
-				'slug' => $slug,
-				'body' => $this->input->post('body'),
-				'category_id' => $this->input->post('category_id'),
-				'user_id' => $this->session->userdata('user_id'),
-				'post_image' => $post_image
-			);
-			return $this->db->insert('posts', $data);
+		public function get_one_entry($email) {
+			$query = $this->db->query("SELECT * FROM users WHERE email = ".$email);
+			return $query->row_array();
 		}
 
 		public function delete_post($id){
@@ -78,7 +70,7 @@
 			return true;
 		}
 
-		public function update_post(){
+		public function update(){
 			$slug = url_title($this->input->post('title'));
 			$data = array(
 				'title' => $this->input->post('title'),

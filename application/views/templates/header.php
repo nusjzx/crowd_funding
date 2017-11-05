@@ -14,6 +14,9 @@
         <div id="navbar">
           <ul class="nav navbar-nav">
             <li><?php echo anchor('projects/index', 'Projects')?></li>
+            <?php if(is_admin()) : ?>
+              <li><?php echo anchor('users/index', 'Users')?></li>
+            <?php endif; ?>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           <?php if(!$this->session->userdata('logged_in')) : ?>
@@ -21,6 +24,7 @@
             <li><?php echo anchor('users/register', 'Register') ?></li>
           <?php endif; ?>
           <?php if($this->session->userdata('logged_in')) : ?>
+            <li><?php echo anchor("users/edit/'".trim(current_user_email())."'", 'Profile') ?></li>
             <li><?php echo anchor('users/logout', 'Logout')?></li>
           <?php endif; ?>
           </ul>
