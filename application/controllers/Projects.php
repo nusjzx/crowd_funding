@@ -81,7 +81,7 @@ class Projects extends CI_Controller {
 			$this->load->view('templates/footer');
 		} else {
 			$update_data = $this->input->post();
-			show_error($update_data);
+			//show_error($update_data);
 			$this->projects_model->update_entry($update_data);
 			$this->load->view('templates/header');
 			$this->load->view('projects/formsuccess');

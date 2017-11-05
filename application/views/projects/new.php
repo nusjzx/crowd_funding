@@ -8,22 +8,32 @@
 
 	<?php echo form_open('projects/create'); ?>
 
-	<h5>Title</h5>
-	<input type="text" name="title" value="" size="50" />
+	<div class="form-group">
+		<h5>Title</h5>
+		<input type="text" name="title" value="" size="50" />
+	</div>
 
-	<h5>Description</h5>
-	<input type="text" name="description" value="" size="50" />
+	<div class="form-group">
+		<h5>Description</h5>
+		<textarea class="form-control" name="description" placeholder="Enter description here..."></textarea>
+	</div>
 
 	<input type="hidden" name="start_date" value="<?php echo $start_date; ?>" />
 
-	<h5>Duartion (Days)</h5>
-	<input type="number" name="duration" value="" size="50" />
+	<div class="form-group">
+		<h5>Duartion (Days)</h5>
+		<input type="number" name="duration" value="" size="50" />
+	</div>
 
-	<h5>Category</h5>
-	<input type="text" name="category" value="" size="50" />
+	<div class="form-group">
+		<h5>Category</h5>
+		<input type="text" name="category" value="" size="50" />
+	</div>
 
-	<h5>Aim Amount</h5>
-	<input type="number" name="aim_amount" value="" size="50" />
+	<div class="form-group">
+		<h5>Aim Amount</h5>
+		<input type="number" name="aim_amount" value="" size="50" />
+	</div>
 
 	<input type="hidden" name="current_amount" value="0" />
 
@@ -31,7 +41,9 @@
 
 	<input type="hidden" name="creator_email" value="<?php echo $creator_email; ?>" />	
 
-	<div><input type="submit" value="Create Now!" /></div>
+	<div class="form-group">
+		<div><input type="submit" value="Create Now!" /></div>
+	</div>
 
 </form>
 

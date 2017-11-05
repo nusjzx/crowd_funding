@@ -41,18 +41,9 @@ class Projects_model extends CI_Model {
 		$this->db->query($sql, $post);
 	}
 
-	public function update_entry() {
-		$this->$id = $_POST['id'];
-		$this->$title = $_POST['title'];
-		$this->$description = $_POST['description'];
-		$this->$start_date = $_POST['start_date'];
-		$this->$duration = $_POST['duration'];
-		$this->$category = $_POST['category'];
-		$this->$aim_amount = $_POST['aim_amount'];
-		$this->$current_amount = $_POST['current_amount'];
-		$this->$fund_status = $_POST['fund_status'];
-		$this->$creator_email = $_POST['creator_email'];
-		$this->db->update('projects', $this);
+	public function update_entry($post) {
+		$sql = "UPDATE projects SET title = ?, description = ?, duration = ?, category = ?, aim_amount = ? WHERE id = ?;";
+		$this->db->query($sql, $post);
 	}
 
 	public function delete_entry() {
