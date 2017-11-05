@@ -13,11 +13,11 @@
 				$this->load->view('templates/footer');
 			} else {
 				// Encrypt password
-				$enc_password = md5($this->input->post('password'));
+				$enc_password = $this->input->post('password');
 				$this->user_model->register($enc_password);
 				// Set message
 				$this->session->set_flashdata('user_registered', 'You are now registered and can log in');
-				redirect('projects');
+				redirect(base_url());
 			}
 		}
 		// Log in user
@@ -34,24 +34,26 @@
 				// Get username
 				$username = $this->input->post('username');
 				// Get and encrypt the password
-				$password = md5($this->input->post('password'));
+				$password = $this->input->post('password');
 				// Login user
-				$email = $this->user_model->login($username, $password);
-				if($email){
+				$result = $this->user_model->login($username, $password);
+
+				if($result){
 					// Create session
 					$user_data = array(
 						'email' => $email,
-						'username' => $username,
+						'username' => $result['email'],
+						'isadmin' => $result['isadmin'],
 						'logged_in' => true
 					);
 					$this->session->set_userdata($user_data);
 					// Set message
 					$this->session->set_flashdata('user_loggedin', 'You are now logged in');
-					redirect('posts');
+					redirect(base_url());
 				} else {
 					// Set message
 					$this->session->set_flashdata('login_failed', 'Login is invalid');
-					redirect('projects');
+					redirect('users/login');
 				}		
 			}
 		}
@@ -61,9 +63,10 @@
 			$this->session->unset_userdata('logged_in');
 			$this->session->unset_userdata('user_id');
 			$this->session->unset_userdata('username');
+			$this->session->unset_userdata('isadmin');
 			// Set message
 			$this->session->set_flashdata('user_loggedout', 'You are now logged out');
-			redirect('users/login');
+			redirect(base_url());
 		}
 		// Check if username exists
 		public function check_username_not_exists($username){
@@ -86,8 +89,9 @@
 
 			// // Init Pagination
 			// $this->pagination->initialize($config);
+
 			if(is_admin()) {
-				$data['title'] = 'Latest Posts';
+				$data['title'] = 'Users';
 
 				$data['users'] = $this->user_model->get();
 
@@ -95,7 +99,7 @@
 				$this->load->view('users/index', $data);
 				$this->load->view('templates/footer');
 			} else {
-				redirect('projects/index');
+				redirect(base_url());
 			}
 		}
 
