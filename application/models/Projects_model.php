@@ -16,17 +16,8 @@ class Projects_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function get_percentage() {
-		$query = $this->db->query("SELECT current_amount, aim_amount FROM projects");
-		$data = $query->result_array();
-		for ($i = 0; $i < count($data); ++$i) {
-			$result[$i] = round($data[$i]['current_amount']/$data[$i]['aim_amount'], 2);
-		}
-		return $result;
-	}
-
 	public function get_all_entries() {
-		$query = $this->db->query("SELECT * FROM projects");
+		$query = $this->db->query("SELECT *, 100*current_amount/aim_amount as percentage FROM projects");
 		return $query->result_array();
 	}
 
