@@ -4,7 +4,6 @@
 		public function register(){
 			$data['title'] = 'Sign Up';
 
-			$this->form_validation->set_rules('name', 'Name', 'required');
 			$this->form_validation->set_rules('username', 'Username', 'required|callback_check_username_exists');
 			$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_exists');
 			$this->form_validation->set_rules('password', 'Password', 'required');
@@ -118,7 +117,7 @@
 			if(is_admin()) {
 				$data['title'] = 'Latest Posts';
 
-				$data['posts'] = $this->post_model->get_posts(FALSE, $config['per_page'], $offset);
+				$data['users'] = $this->user_model->get();
 
 				$this->load->view('templates/header');
 				$this->load->view('users/index', $data);
