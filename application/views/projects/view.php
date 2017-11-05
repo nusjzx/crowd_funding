@@ -29,8 +29,9 @@
 		<?php echo '<h5>Contact the initiator: '.$item_details['creator_email'].'</h5>'; ?>
 	</div>
 
-	<label><?php if(current_user_email() == $item_details['creator_email']) {
-		echo anchor('projects/edit/'.$item_details['id'], 'Edit Project');
+	<label><?php if(current_user_email() == $item_details['creator_email'] || is_admin()) {
+		echo anchor('projects/edit/'.$item_details['id'], 'Edit Project')."<br>";
+		echo anchor('projects/delete/'.$item_details['id'], 'Delete');
 	} ?></label><br>
 	<label><?php echo anchor(base_url(), 'Back'); ?></label>
 

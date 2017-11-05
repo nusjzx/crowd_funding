@@ -9,7 +9,7 @@ class Projects extends CI_Controller {
 	}
 
 	public function index() {
-		$data['title'] = 'All Fundraising Campaigns';
+		$data['title'] = 'All Fundraising Projects';
 		$data['details'] = $this->projects_model->get_all_entries();
 		//show_error($data['details'][7]);
 		$this->load->view('templates/header', $data);
@@ -55,8 +55,9 @@ class Projects extends CI_Controller {
 			$insert_data = $this->input->post();
 			//show_error($insert_data);
 			$this->projects_model->insert_entry($insert_data);
+			$data['title'] = "created";
 			$this->load->view('templates/header');
-			$this->load->view('projects/formsuccess');
+			$this->load->view('projects/formsuccess', $data);
 			$this->load->view('templates/footer');
 		}
 	}
@@ -83,10 +84,32 @@ class Projects extends CI_Controller {
 			$update_data = $this->input->post();
 			//show_error($update_data);
 			$this->projects_model->update_entry($update_data);
+			$data['title'] = "updated";
 			$this->load->view('templates/header');
-			$this->load->view('projects/formsuccess');
+			$this->load->view('projects/formsuccess', $data);
 			$this->load->view('templates/footer');
 		}
+	}
+
+	public function delete($id) {
+		if(!$this->session->userdata('logged_in')){
+			redirect('users/login');
+		}
+
+		$data['title'] = "deleted";
+		$this->projects_model->delete_entry($id);
+		$this->load->view('templates/header');
+		$this->load->view('projects/formsuccess', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function search() {
+		$keyword = $this->input->post();
+		$data['title'] = 'Results result of '.$keyword['search'];
+		$data['details'] = $this->projects_model->search_entry($keyword['search']);
+		$this->load->view('templates/header', $data);
+		$this->load->view('projects/search', $data);
+		$this->load->view('templates/footer', $data);
 	}
 
 	public function positive_check($num) {

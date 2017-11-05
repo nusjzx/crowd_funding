@@ -1,29 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>All Fundraising Campaigns</title>
+	<title>Search result</title>
 	<link rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.min.css">
 </head>
 <body>
-	<div class="container pull-left">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-5">
-				<h3>Search Projects</h3>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4 col-md-offset-5">
-				<form action="<?php echo base_url().'projects/search'; ?>" class="search-form" method="post">
-					<div class="form-group has-feedback">
-						<label for="search" class="sr-only">Search</label>
-						<input type="text" class="form-control" name="search" id="search" placeholder="search">
-						<span class="glyphicon glyphicon-search form-control-feedback"></span>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
 	<div class="row">
 		<h1><?php echo ''.$title; ?></h1>
 	</div>

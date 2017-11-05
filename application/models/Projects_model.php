@@ -46,9 +46,14 @@ class Projects_model extends CI_Model {
 		$this->db->query($sql, $post);
 	}
 
-	public function delete_entry() {
-		$query = $this->db->query("DELETE FROM projects WHERE id = '".$_POST['id']."'");
-		return $query->result();
+	public function delete_entry($id) {
+		$this->db->query("DELETE FROM projects WHERE id = ".$id);
+	}
+
+	public function search_entry($keyword) {
+		$sql = "SELECT *, 100*current_amount/aim_amount as percentage FROM projects WHERE LOWER(title) LIKE LOWER('%".$keyword."%') OR LOWER(category) LIKE LOWER('%".$keyword."%');";
+		$query = $this->db->query($sql);
+		return $query->result_array();
 	}
 }
 ?>
