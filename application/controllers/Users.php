@@ -4,9 +4,8 @@
 		public function register(){
 			$data['title'] = 'Sign Up';
 
-			$this->form_validation->set_rules('name', 'Name', 'required');
-			$this->form_validation->set_rules('username', 'Username', 'required|callback_check_username_exists');
-			$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_exists');
+			$this->form_validation->set_rules('username', 'Username', 'required|callback_check_username_not_exists');
+			$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_not_exists');
 			$this->form_validation->set_rules('password', 'Password', 'required');
 			$this->form_validation->set_rules('password2', 'Confirm Password', 'matches[password]');
 
@@ -22,8 +21,7 @@
 
 				// Set message
 				$this->session->set_flashdata('user_registered', 'You are now registered and can log in');
-
-				redirect('posts');
+				redirect('projects');
 			}
 		}
 
@@ -46,12 +44,12 @@
 				$password = md5($this->input->post('password'));
 
 				// Login user
-				$user_id = $this->user_model->login($username, $password);
+				$email = $this->user_model->login($username, $password);
 
-				if($user_id){
+				if($email){
 					// Create session
 					$user_data = array(
-						'user_id' => $user_id,
+						'email' => $email,
 						'username' => $username,
 						'logged_in' => true
 					);
@@ -66,7 +64,7 @@
 					// Set message
 					$this->session->set_flashdata('login_failed', 'Login is invalid');
 
-					redirect('users/login');
+					redirect('projects');
 				}		
 			}
 		}
@@ -85,22 +83,16 @@
 		}
 
 		// Check if username exists
-		public function check_username_exists($username){
-			$this->form_validation->set_message('check_username_exists', 'That username is taken. Please choose a different one');
-			if($this->user_model->check_username_exists($username)){
-				return true;
-			} else {
-				return false;
-			}
+		public function check_username_not_exists($username){
+
+			$this->form_validation->set_message('check_username_not_exists', 'That username is taken. Please choose a different one');
+
+			return $this->user_model->check_username_not_exists($username);
 		}
 
 		// Check if email exists
-		public function check_email_exists($email){
-			$this->form_validation->set_message('check_email_exists', 'That email is taken. Please choose a different one');
-			if($this->user_model->check_email_exists($email)){
-				return true;
-			} else {
-				return false;
-			}
+		public function check_email_not_exists($email){
+			$this->form_validation->set_message('check_email_not_exists', 'That email is taken. Please choose a different one');
+			return $this->user_model->check_email_not_exists($email);
 		}
 	}
